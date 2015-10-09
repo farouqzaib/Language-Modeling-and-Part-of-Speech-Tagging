@@ -277,6 +277,17 @@ def nltk_tagger(brown_words, brown_tags, brown_dev_words):
 
     # IMPLEMENT THE REST OF THE FUNCTION HERE
     tagged = []
+    t0 = nltk.DefaultTagger('NOUN')
+    t1 = nltk.BigramTagger(training, backoff = t0)
+    t2 = nltk.TrigramTagger(training, backoff = t1)
+    
+    for item in brown_dev_words:
+	st = ''
+	tags = t2.tag(item)
+	for subitem in tags:
+	    st = st+subitem[0]+'/'+subitem[1]+' '
+	tagged.append(st.strip()+'\n')
+    
     return tagged
 
 # This function takes the output of nltk_tagger() and outputs it to file

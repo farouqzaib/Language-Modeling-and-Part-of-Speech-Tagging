@@ -105,6 +105,17 @@ python pos.py output/B5.txt data/Brown_tagged_dev.txt
 Percent correct tags: 93.3249946254
 
 
+Problem B(6):
+This step, we will create an instance of NLTK's trigram tagger set to back off to NLTK's bigram tagger. Let the bigram tagger iteself back off to NLTK's default tagger using the tag "NOUN". Implement this in the nltk_tagger() funciton. 
+Use the part of speech evalution script pos.py to evaluate the NLTK's tagger accuracy and the result is as follows,
+python pos.py output/B6.txt data/Brown_tagged_dev.txt 
+Percent correct tags: 87.9985146677
+
+
+The Runtime of Problem A and Problem B as follow,
+Part A time: 10.605692 sec
+Part B time: 60.685403 sec
+
 
 
 
