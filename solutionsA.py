@@ -119,6 +119,9 @@ def score(ngram_p, n, corpus):
 	else:
 	    tokens = nltk.trigrams([START_SYMBOL]+sentence)
 	for token in tokens:
+	    if token not in ngram_p:
+		score_cur = MINUS_INFINITY_SENTENCE_LOG_PROB
+		break
 	    score_cur += ngram_p[token]
 	scores.append(score_cur)
 	    	
