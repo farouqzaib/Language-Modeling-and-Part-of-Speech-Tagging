@@ -65,5 +65,50 @@ In this way, we could make a conclusion that Sample1 belongs to the Brown datase
 
 Problem B: Part-of-Speech Tagging
 
+Problem B(1):
+First, you should separate the tags and words in "Brown_tagged_train.txt". This corresponds to implementing the split_wordtags() function. You'll want to store the sentences without tags in one data structure, and the tags alone in another (see instructions in the code). Make sure to add sentence start and stop symbols to both lists (of words and tags), and use the constants START_SYMBOL and STOP_SYMBOL already provided. 
+
+
+Problem B(2):
+Calculate the trigram probabilities for the tags. This corresponds to implementing the calc_trigrams() functions. The code outputs your result to a file "output/B2.txt".
+Here are several log probabilities of the following trigrams:
+TRIGRAM CONJ ADV ADP -2.9755173148
+TRIGRAM DET NOUN NUM -8.9700526163
+TRIGRAM NOUN PRT PRON -11.0854724592
+
+
+Problem B(3):
+This step is to implement a smoothing method. To prepare for adding smoothing, replace every word that occurs five times or fewer with the token "_RARE_" (use constant RARE_SYMBOL). This corresponds to implementing the calc_known() and replace_rare() functions.
+
+
+Problem B(4):
+Now we could calculate the emission probabilities on the modified dataset. This corresponds to implementing the calc_emission() function. 
+Here are several log probabilities of the following emissions.
+* * 0.0
+Night NOUN -13.8819025994
+Place VERB -15.4538814891
+prime ADJ -10.6948327183
+STOP STOP 0.0
+_RARE_ VERB -3.17732085089
+
+
+Problem B(5):
+Now, implement the Viterbi algorithm for HMM taggers. The Viterbi algorithm is a dynamic programming algorithm that has many applications. For our purposes, the Viterbi algorithm algorithm is a comparatively efficient method for finding the highest scoring tag sequence for a given sentence. 
+Using the emission and trigram probabilities, calculate the most likely tag sequence for each sentence in "Brown_dev.txt". This corresponds to implementing the viterbi() function. The tagged sentences will be output to "output/B5.txt".
+
+Notes:
+1. The output doesn't have the "_RARE_" token, but we have to count unknown words as "_RARE_" symbol to compute the probabilities inside the Viterbi algorithm.
+2. When exploring the space of possibilities for the tags of given word, make sure to only consider tags with emission probability greater than zero for that given word. Also, when accessing the transition probabilities of tag trigrams, use -1000 (constant LOG_PROB_OF_ZERO in the code) to represent the log-probability of an unseen transition.
+
+We could then use the part of speech evaluation script pos.py to compare the output file with "Brown_tagged_dev.txt" and the accuracy of our tagger as follows,
+python pos.py output/B5.txt data/Brown_tagged_dev.txt 
+Percent correct tags: 93.3249946254
+
+
+
+
+
+
+
 
 
