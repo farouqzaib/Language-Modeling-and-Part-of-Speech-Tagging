@@ -142,6 +142,21 @@ def score_output(scores, filename):
 # Like score(), this function returns a python list of scores
 def linearscore(unigrams, bigrams, trigrams, corpus):
     scores = []
+    for item in corpus:
+	score_tmp = 0
+	uni_cur = (item.strip()+' '+STOP_SYMBOL).split()
+	bi_cur = list(nltk.bigrams([START_SYMBOL]+uni_cur))
+	tri_cur = list(nltk.trigrams([START_SYMBOL, START_SYMBOL]+uni_cur))
+	for i in xrange(len(uni_cur)):
+	    if ((uni_cur[i],) in unigrams) and (bi_cur[i] in bigrams) and (tri_cur[i] in trigrams):
+		tmp = math.pow(2, unigrams[(uni_cur[i],)]) + math.pow(2, bigrams[bi_cur[i]]) + math.pow(2, trigrams[tri_cur[i]])
+	    else:
+		score_tmp = MINUS_INFINITY_SENTENCE_LOG_PROB
+		break
+	    tmp = math.log(tmp/3,2)
+	    score_tmp += tmp
+	scores.append(score_tmp)
+
     return scores
 
 DATA_PATH = 'data/'
